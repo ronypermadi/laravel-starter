@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Livewire\Posts;
+use App\Http\Livewire\Users;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 
@@ -20,6 +21,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     Route::get('/post', Posts::class)->name('post');
+    Route::get('/users', Users::class)->name('users');
     
 });
 
