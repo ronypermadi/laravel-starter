@@ -17,9 +17,12 @@ Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::view('/dashboard', "dashboard")->name('dashboard');
+
+    Route::get('/user', [ UserController::class, "index_view" ])->name('user');
+    Route::view('/user/new', "pages.user.user-new")->name('user.new');
+    Route::view('/user/edit/{userId}', "pages.user.user-edit")->name('user.edit');
+
     Route::get('/post', Posts::class)->name('post');
     Route::get('/users', Users::class)->name('users');
     
