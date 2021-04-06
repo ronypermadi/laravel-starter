@@ -2,80 +2,75 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Livewire\Component;
 
 class Users extends Component
 {
-    public $users, $name, $email, $password, $user_id;
-    public $isOpen = 0;
+    public $user;
+    public $userId;
+    public $action;
+    public $button;
+
+    protected function getRules()
+    {
+        $rules = ($this->action == "updateUser") ? [
+            'user.email' => 'required|email|unique:users,email,' . $this->userId
+        ] : [
+            'user.password' => 'required|min:8|confirmed',
+            'user.password_confirmation' => 'required' // livewire need this
+        ];
+
+        return array_merge([
+            'user.name' => 'required|min:3',
+            'user.email' => 'required|email|unique:users,email'
+        ], $rules);
+    }
+
+    public function createUser ()
+    {
+        $this->resetErrorBag();
+        $this->validate();
+
+        $password = $this->user['password'];
+
+        if ( !empty($password) ) {
+            $this->user['password'] = Hash::make($password);
+        }
+
+        User::create($this->user);
+
+        $this->emit('saved');
+        $this->reset('user');
+    }
+
+    public function updateUser ()
+    {
+        $this->resetErrorBag();
+        $this->validate();
+
+        User::query()
+            ->where('id', $this->userId)
+            ->update([
+                "name" => $this->user->name,
+                "email" => $this->user->email,
+            ]);
+
+        $this->emit('saved');
+    }
+
+    public function mount ()
+    {
+        if (!$this->user && $this->userId) {
+            $this->user = User::find($this->userId);
+        }
+
+        $this->button = create_button($this->action, "User");
+    }
 
     public function render()
     {
-        $this->users = User::all();
-        return view('livewire.users.index');
+        return view('livewire.users.users-form');
     }
-
-    public function create()
-    {
-        $this->resetInputFields();
-        $this->openModal();
-    }
-
-    public function openModal()
-    {
-        $this->isOpen = true;
-    }
-
-    public function closeModal()
-    {
-        $this->isOpen = false;
-    }
-
-    private function resetInputFields(){
-        $this->name = '';
-        $this->email = '';
-        $this->password = '';
-        $this->user_id = '';
-    }
-
-    public function store()
-    {
-        $this->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-   
-        User::updateOrCreate(['id' => $this->user_id], [
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
-        ]);
-  
-        session()->flash('message', 
-            $this->user_id ? 'User Updated Successfully.' : 'User Created Successfully.');
-  
-        $this->closeModal();
-        $this->resetInputFields();
-    }
-
-    public function edit($id)
-    {
-        $user = User::findOrFail($id);
-        $this->user_id = $id;
-        $this->name = $user->name;
-        $this->email = $user->email;
-        $this->password = $user->password;
-    
-        $this->openModal();
-    }
-
-    public function delete($id)
-    {
-        User::find($id)->delete();
-        session()->flash('message', 'User Deleted Successfully.');
-    }
-
 }

@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css" media="all">
         <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
 
-        @livewireStyles
+        <livewire:styles />
 
         <!-- Scripts -->
         <script defer src="{{ asset('vendor/alpine.js') }}"></script>
@@ -72,7 +72,7 @@
         <script src="{{ asset('stisla/js/stisla.js') }}"></script>
         <script src="{{ asset('stisla/js/scripts.js') }}"></script>
 
-        @livewireScripts
+        <livewire:scripts />
         <script src="{{ mix('js/app.js') }}" defer></script>
 
         @isset($script)

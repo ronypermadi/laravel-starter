@@ -8,8 +8,8 @@ class UserController extends Controller
 {
     public function index_view ()
     {
-        return view('pages.user.user-data', [
-            'user' => User::class
+        return view('pages.users.user-data', [
+            'users' => User::class
         ]);
     }
 }

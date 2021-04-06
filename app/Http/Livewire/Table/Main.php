@@ -33,13 +33,13 @@ class Main extends Component
     public function get_pagination_data ()
     {
         switch ($this->name) {
-            case 'user':
+            case 'users':
                 $users = $this->model::search($this->search)
                     ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                     ->paginate($this->perPage);
 
                 return [
-                    "view" => 'livewire.table.user',
+                    "view" => 'livewire.table.users',
                     "users" => $users,
                     "data" => array_to_object([
                         'href' => [

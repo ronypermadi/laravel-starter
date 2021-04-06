@@ -6,6 +6,7 @@ use App\Http\Livewire\Posts;
 use App\Http\Livewire\Users;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,11 +21,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::view('/dashboard', "dashboard")->name('dashboard');
 
     Route::get('/user', [ UserController::class, "index_view" ])->name('user');
-    Route::view('/user/new', "pages.user.user-new")->name('user.new');
-    Route::view('/user/edit/{userId}', "pages.user.user-edit")->name('user.edit');
-
-    Route::get('/post', Posts::class)->name('post');
-    Route::get('/users', Users::class)->name('users');
+    Route::view('/user/new', "pages.users.user-new")->name('user.new');
+    Route::view('/user/edit/{userId}', "pages.users.user-edit")->name('user.edit');
     
 });
 
