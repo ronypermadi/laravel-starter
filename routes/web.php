@@ -7,9 +7,15 @@ use App\Http\Livewire\Users;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MenuController;
+
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/menus', function (App\Models\Menu $menu) {
+    return json_encode($menu->all());
 });
 
 Route::get('auth/facebook', [FacebookController::class, 'redirectToFacebook']);
@@ -23,6 +29,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/user', [ UserController::class, "index_view" ])->name('user');
     Route::view('/user/new', "pages.users.user-new")->name('user.new');
     Route::view('/user/edit/{userId}', "pages.users.user-edit")->name('user.edit');
+
+    Route::get('/menu', [ MenuController::class, "index" ])->name('menu');
     
 });
 
