@@ -1,11 +1,11 @@
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ route('dashboard') }}">Dashboard</a>
+            <img class="d-inline-block" width="40px" height="35.61px" src="{{asset('img/Logo.png')}}" alt=""><a href="{{ route('dashboard') }}">{{ config('app.name', 'Laravel') }}</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{ route('dashboard') }}">
-                <img class="d-inline-block" width="32px" height="30.61px" src="" alt="">
+                <img class="d-inline-block" width="32px" height="30.61px" src="{{asset('img/Logo.png')}}" alt="">
             </a>
         </div>
 
