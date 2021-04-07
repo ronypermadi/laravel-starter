@@ -61,7 +61,7 @@ class Main extends Component
                     "menus" => $menus,
                     "data" => array_to_object([
                         'href' => [
-                            'create_new' => route('user.new'),
+                            'create_new' => route('menu.new'),
                             'create_new_text' => 'Buat Menu Baru',
                         ]
                     ])

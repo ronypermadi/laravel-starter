@@ -16,7 +16,8 @@ class Users extends Component
     protected function getRules()
     {
         $rules = ($this->action == "updateUser") ? [
-            'user.email' => 'required|email|unique:users,email,' . $this->userId
+            'user.email' => 'required|email|unique:users,email,' . $this->userId,
+            'user.username' => 'required|unique:users,username,' . $this->userId
         ] : [
             'user.password' => 'required|min:8|confirmed',
             'user.password_confirmation' => 'required' // livewire need this
@@ -24,7 +25,8 @@ class Users extends Component
 
         return array_merge([
             'user.name' => 'required|min:3',
-            'user.email' => 'required|email|unique:users,email'
+            'user.email' => 'required|email|unique:users,email',
+            'user.username' => 'required|unique:users,username'
         ], $rules);
     }
 
@@ -38,6 +40,7 @@ class Users extends Component
         if ( !empty($password) ) {
             $this->user['password'] = Hash::make($password);
         }
+        $this->user['status'] = true;
 
         User::create($this->user);
 
@@ -55,6 +58,7 @@ class Users extends Component
             ->update([
                 "name" => $this->user->name,
                 "email" => $this->user->email,
+                "username" => $this->user->username,
             ]);
 
         $this->emit('saved');

@@ -27,6 +27,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::view('/user/edit/{userId}', "pages.users.user-edit")->name('user.edit');
 
     Route::get('/menu', [ MenuController::class, "index" ])->name('menu');
-    
+    Route::view('/menu/new', "pages.menus.menu-new")->name('menu.new');
+    Route::view('/menu/edit/{menuId}', "pages.menus.menu-edit")->name('menu.edit');
 });
 

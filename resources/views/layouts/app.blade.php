@@ -13,6 +13,7 @@
 
         <!-- Styles -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="{{asset('img/Logo.png')}}" type="image/x-icon">
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
         <link rel="stylesheet" href="{{ asset('stisla/css/style.css') }}">
@@ -74,7 +75,50 @@
 
         <livewire:scripts />
         <script src="{{ mix('js/app.js') }}" defer></script>
+        <script>
+            function dataTableController(id) {
+                return {
+                    id: id,
+                    deleteItem: function deleteItem() {
+                    var _this = this;
 
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then(function (result) {
+                        if (result.isConfirmed) {
+                        Livewire.emit('deleteItem', _this.id);
+                        }
+                    });
+                    }
+                };
+            }
+
+            function dataTableMainController() {
+                return {
+                    setCallback: function setCallback() {
+                    Livewire.on('deleteResult', function (result) {
+                        if (result.status) {
+                        Swal.fire('Deleted!', result.message, 'success');
+                        } else {
+                        Swal.fire('Error!', result.message, 'error');
+                        }
+                    });
+                    }
+                };
+            }
+
+            window.__controller = {
+                dataTableController: dataTableController,
+                dataTableMainController: dataTableMainController
+            };
+        </script>
+        
         @isset($script)
             {{ $script }}
         @endisset
