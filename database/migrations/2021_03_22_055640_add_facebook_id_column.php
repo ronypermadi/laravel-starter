@@ -14,7 +14,7 @@ class AddFacebookIdColumn extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-            $table->string('facebook_id')->nullable();
+            $table->string('facebook_id')->after('google_id')->nullable();
         });
     }
 
