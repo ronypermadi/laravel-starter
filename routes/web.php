@@ -14,10 +14,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/menus', function (App\Models\Menu $menu) {
-    return json_encode($menu->all());
-});
-
 Route::get('auth/facebook', [FacebookController::class, 'redirectToFacebook']);
 Route::get('auth/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
