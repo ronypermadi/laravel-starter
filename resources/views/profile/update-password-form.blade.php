@@ -29,11 +29,13 @@
 
     <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
+            {{ __('Updated') }}
         </x-jet-action-message>
 
         <x-jet-button>
-            {{ __('Save') }}
+            {{ __('Update') }}
         </x-jet-button>
     </x-slot>
 </x-jet-form-section>
+
+<x-notify-message on="saved" type="success" :message="__('Data Berhasil di Perbarui')" />
