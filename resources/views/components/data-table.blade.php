@@ -2,7 +2,7 @@
     <div class="p-8 pt-4 mt-2 bg-white" x-data="window.__controller.dataTableMainController()" x-init="setCallback();">
         <div class="flex pb-4 -ml-3">
             @isset($data->href->create_new)
-                <a href="{{ $data->href->create_new }}" target="_blank" class="-ml- btn btn-primary shadow-none">
+                <a href="{{ $data->href->create_new }}" class="-ml- btn btn-primary shadow-none">
                     @isset($data->href->create_new_text)
                         <span class="fas fa-plus"></span> {{ $data->href->create_new_text }}
                     @endisset
@@ -12,6 +12,13 @@
                 <a href="{{ $data->href->export }}" class="ml-2 btn btn-success shadow-none">
                     @isset($data->href->export_text)
                         <span class="fas fa-file-export"></span> {{ $data->href->export_text }}
+                    @endisset
+                </a>
+            @endisset
+            @isset($data->href->link_to)
+                <a href="{{ $data->href->link_to }}" class="ml-2 btn btn-info shadow-none">
+                    @isset($data->href->link_to_text)
+                        <span class="fas fa-list"></span> {{ $data->href->link_to_text }}
                     @endisset
                 </a>
             @endisset

@@ -51,6 +51,40 @@ class Main extends Component
                     ])
                 ];
                 break;
+            case 'roles':
+                    $roles = $this->model::orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                        ->paginate($this->perPage);
+    
+                    return [
+                        "view" => 'livewire.table.roles',
+                        "roles" => $roles,
+                        "data" => array_to_object([
+                            'href' => [
+                                'create_new' => route('role.new'),
+                                'create_new_text' => 'Buat Role Baru',
+                                'link_to' => route('permission'),
+                                'link_to_text' => 'List Permission'
+                            ]
+                        ])
+                    ];
+                    break;
+            case 'permissions':
+                    $permissions = $this->model::orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                        ->paginate($this->perPage);
+    
+                    return [
+                        "view" => 'livewire.table.permissions',
+                        "permissions" => $permissions,
+                        "data" => array_to_object([
+                            'href' => [
+                                'create_new' => route('permission.new'),
+                                'create_new_text' => 'Buat Permission Baru',
+                                'link_to' => route('role'),
+                                'link_to_text' => 'List Role'
+                            ]
+                        ])
+                    ];
+                    break;
             case 'menus':
                 $menus = $this->model::search($this->search)
                     ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
@@ -62,7 +96,7 @@ class Main extends Component
                     "data" => array_to_object([
                         'href' => [
                             'create_new' => route('menu.new'),
-                            'create_new_text' => 'Buat Menu Baru',
+                            'create_new_text' => 'Buat Menu Baru'
                         ]
                     ])
                 ];
