@@ -1,3 +1,7 @@
+@php
+$user = auth()->user();
+@endphp
+
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
@@ -10,17 +14,18 @@
         </div>
 
         @foreach($menus as $menu)
-        <ul class="sidebar-menu">
+        <ul class="sidebar-menu">  
+        @if ($user->hasAnyRole(explode(",",$menu->role)))
             <li class="menu-header">{{ $menu->title }}</li>
             @if (!$menu->is_multi)
-            <li class="{{ Request::routeIs($menu->href) ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route($menu->href) }}"><i class="{{ $menu->icon }}"></i><span>Dashboard</span></a>
-            </li>
+                <li class="{{ !Request::routeIs($menu->href) ? '' : ( Request::routeIs($menu->href) ? 'active' : '') }}">
+                    <a class="nav-link" href="{{ !Request::routeIs($menu->href) ? '' : route($menu->href) }}"><i class="{{ $menu->icon }}"></i><span>{{$menu->text}}</span></a>
+                </li>
             @else
                 @include('components.sub-menu',['childs' => $menu->childs])
             @endif
+        @endif
         </ul>
         @endforeach
-        
     </aside>
 </div>

@@ -16,5 +16,7 @@ class UserHasRoleTableSeeder extends Seeder
     {
         $user = User::findOrFail(1);
         $user->syncRoles('Admin');
+        $user = User::findOrFail(2);
+        $user->syncRoles('User');
     }
 }

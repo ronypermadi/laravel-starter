@@ -15,9 +15,9 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'model-list',
+            'model-read',
             'model-create',
-            'model-show',
+            'model-detail',
             'model-edit',
             'model-delete',
             'model-trash',

@@ -21,6 +21,11 @@ class UserTableSeeder extends Seeder
             'username' => 'admin',
             'password' => Hash::make('bismillah'),
             'status' => true ],
+            ['id' => 2, 'name' => 'User RY',
+            'email' => 'user@ronypermadi.com',
+            'username' => 'user',
+            'password' => Hash::make('bismillah'),
+            'status' => true ],
         ];
         foreach($users as $user){
             User::create($user);

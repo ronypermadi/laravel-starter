@@ -18,5 +18,7 @@ class RolePermissionTableSeeder extends Seeder
         $permissions = Permission::pluck('id','id')->all();
         $role = Role::findByName('Admin');
         $role->syncPermissions($permissions);
+        $role = Role::findByName('User');
+        $role->syncPermissions([1,2]);
     }
 }

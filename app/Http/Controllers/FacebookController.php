@@ -23,13 +23,23 @@ class FacebookController extends Controller
             $user = Socialite::driver('facebook')->user();
          
             $finduser = User::where('facebook_id', $user->id)->first();
-        
+            $findemail = User::where('email', $user->email)->first();
+            
             if($finduser){
          
                 Auth::login($finduser);
         
                 return redirect()->intended('dashboard');
          
+            }else if($findemail){
+                $findemail->update([
+                    'name' => $user->name,
+                    'facebook_id'=> $user->id,
+                ]);
+                
+                Auth::login($findemail);
+
+                return redirect()->intended('dashboard');
             }else{
                 $newUser = User::create([
                     'name' => $user->name,

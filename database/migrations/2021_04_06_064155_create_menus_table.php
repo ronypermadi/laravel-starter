@@ -21,6 +21,7 @@ class CreateMenusTable extends Migration
             $table->string('icon')->nullable();
             $table->string('href');
             $table->boolean('is_multi')->default(false);
+            $table->string('role')->nullable();
             $table->timestamps();
         });
     }
