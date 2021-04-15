@@ -18,7 +18,7 @@ class Menu extends Model
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::where('title', 'like', '%'.$query.'%')
-                ->orWhere('text', 'like', '%'.$query.'%');
+        : static::where('title', 'like', '%'.$query.'%')
+            ->orWhere('text', 'like', '%'.$query.'%');
     }
 }

@@ -10,6 +10,6 @@
     </x-slot>
 
     <div>
-        <livewire:table.main name="menus" :model="$menus" />
+        <livewire:table.main name="menus" :model="$menu" />
     </div>
 </x-app-layout>

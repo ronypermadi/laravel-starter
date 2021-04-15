@@ -34,6 +34,7 @@ class Main extends Component
     {
         switch ($this->name) {
             case 'users':
+                // dd($this->model);
                 $users = $this->model::search($this->search)
                     ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                     ->paginate($this->perPage);
@@ -86,13 +87,14 @@ class Main extends Component
                     ];
                     break;
             case 'menus':
-                $menus = $this->model::search($this->search)
-                    ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
-                    ->paginate($this->perPage);
-
+                // dd($this->model);
+                $menu = $this->model::search($this->search)
+                        ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                        ->paginate($this->perPage);
+                        
                 return [
                     "view" => 'livewire.table.menus',
-                    "menus" => $menus,
+                    "menu" => $menu,
                     "data" => array_to_object([
                         'href' => [
                             'create_new' => route('menu.new'),

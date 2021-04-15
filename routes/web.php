@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Livewire\Posts;
-use App\Http\Livewire\Users;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\UserController;
@@ -36,7 +34,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::view('/permission/new', "pages.permissions.permission-new")->name('permission.new');
     Route::view('/permission/edit/{permissionId}', "pages.permissions.permission-edit")->name('permission.edit');
 
-    Route::get('/menu', [ MenuController::class, "index" ])->name('menu');
+    Route::get('/menu', [ MenuController::class, "index_view" ])->name('menu');
     Route::view('/menu/new', "pages.menus.menu-new")->name('menu.new');
     Route::view('/menu/edit/{menuId}', "pages.menus.menu-edit")->name('menu.edit');
 });

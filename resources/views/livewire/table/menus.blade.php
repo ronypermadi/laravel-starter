@@ -1,5 +1,5 @@
 <div>
-    <x-data-table :data="$data" :model="$menus">
+    <x-data-table :data="$data" :model="$menu">
         <x-slot name="head">
             <tr> 
                 <th><a wire:click.prevent="sortBy('id')" role="button" href="#">
@@ -30,16 +30,16 @@
             </tr>
         </x-slot>
         <x-slot name="body">
-            @foreach ($menus as $menu)
-                <tr x-data="window.__controller.dataTableController({{ $menu->id }})">
-                    <td>{{ $menu->id }}</td>
-                    <td>{{ $menu->parent_id }}</td>
-                    <td>{{ $menu->title }}</td>
-                    <td>{{ $menu->text }}</td>
-                    <td>{{ $menu->href }}</td>
-                    <td>{{ $menu->created_at->format('d M Y H:i') }}</td>
+            @foreach ($menu as $menus)
+                <tr x-data="window.__controller.dataTableController({{ $menus->id }})">
+                    <td>{{ $menus->id }}</td>
+                    <td>{{ $menus->parent_id }}</td>
+                    <td>{{ $menus->title }}</td>
+                    <td>{{ $menus->text }}</td>
+                    <td>{{ $menus->href }}</td>
+                    <td>{{ $menus->created_at->format('d M Y H:i') }}</td>
                     <td class="whitespace-no-wrap row-action--icon">
-                        <a role="button" href="{{route('menu.edit',['menuId' => $menu->id ])}}" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
+                        <a role="button" href="{{route('menu.edit',['menuId' => $menus->id ])}}" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
                         <a role="button" x-on:click.prevent="deleteItem" href="#"><i class="fa fa-16px fa-trash text-red-500"></i></a>
                     </td>
                 </tr>
