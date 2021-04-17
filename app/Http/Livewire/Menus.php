@@ -3,59 +3,64 @@
 namespace App\Http\Livewire;
 
 use App\Models\Menu;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class Menus extends Component
 {
-    public $user;
-    public $userId;
+    public $menu;
+    public $parentMenu;
+    public $menuId;
     public $action;
     public $button;
 
     protected function getRules()
     {
-        $rules = ($this->action == "updateUser") ? [
-            'user.email' => 'required|email|unique:users,email,' . $this->userId
+        $rules = ($this->action == "updateMenu") ? [
+            'menu.text' => 'required|min:3,' . $this->menuId,
+            // 'menu.parent_id' => 'required,'. $this->menuId
         ] : [
-            'user.password' => 'required|min:8|confirmed',
-            'user.password_confirmation' => 'required' // livewire need this
+            
         ];
 
         return array_merge([
-            'user.name' => 'required|min:3',
-            'user.email' => 'required|email|unique:users,email'
+            'menu.title' => 'required|min:3',
+            'menu.text' => 'required|min:3',
+            'menu.parent_id' => 'required',
+            'menu.icon' => 'required',
+            'menu.href' => 'required',
+            'menu.is_multi' => 'required',
+            'menu.role' => 'required'
         ], $rules);
     }
 
-    public function createUser ()
+    public function createMenu ()
     {
         $this->resetErrorBag();
         $this->validate();
+        
+        // $this->menu['parent_id'] = empty($this->menu['parent_id']) ? 0 : $this->menu['parent_id'];
 
-        $password = $this->user['password'];
-
-        if ( !empty($password) ) {
-            $this->user['password'] = Hash::make($password);
-        }
-
-        User::create($this->user);
+        Menu::create($this->menu);
 
         $this->emit('saved');
-        $this->reset('user');
+        $this->reset('menu');
     }
 
-    public function updateUser ()
+    public function updateMenu ()
     {
         $this->resetErrorBag();
         $this->validate();
 
-        User::query()
-            ->where('id', $this->userId)
+        Menu::query()
+            ->where('id', $this->menuId)
             ->update([
-                "name" => $this->user->name,
-                "email" => $this->user->email,
+                "title" => $this->menu->title,
+                "text" => $this->menu->text,
+                "icon" => $this->menu->icon,
+                "href" => $this->menu->href,
+                "is_multi" => $this->menu->is_multi,
+                "role" => $this->menu->role,
             ]);
 
         $this->emit('saved');
@@ -63,15 +68,16 @@ class Menus extends Component
 
     public function mount ()
     {
-        if (!$this->user && $this->userId) {
-            $this->user = User::find($this->userId);
+        if (!$this->menu && $this->menuId) {
+            $this->menu = Menu::find($this->menuId);
         }
-
-        $this->button = create_button($this->action, "User");
+        $this->parentMenu = Menu::where('parent_id','=',0)->pluck('title','id')->all();
+        // dd($this->allMenus);
+        $this->button = create_button($this->action, "Menu");
     }
 
     public function render()
     {
-        return view('livewire.users.users-form');
+        return view('livewire.menus.menus-form');
     }
 }
