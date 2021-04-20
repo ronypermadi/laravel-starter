@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\MessageController;
 
 
 Route::get('/', function () {
@@ -37,5 +38,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/menu', [ MenuController::class, "index_view" ])->name('menu');
     Route::view('/menu/new', "pages.menus.menu-new")->name('menu.new');
     Route::view('/menu/edit/{menuId}', "pages.menus.menu-edit")->name('menu.edit');
+
+    Route::get('/message', [ MessageController::class, "index_view" ])->name('message');
+    Route::get('/autocomplete_searchUser', [ MessageController::class, "autocomplete_searchUser" ])->name('autocomplete_searchUser');
+    Route::get('/listUser', [ MessageController::class, "listUser" ])->name('listUser');
+    
 });
 
